@@ -1,0 +1,11 @@
+{
+  "editor.formatOnSave": true,
+  "[dart]": {
+    "editor.formatOnSave": true,
+    "editor.codeActionsOnSave": {
+      "source.organizeImports": "explicit"
+    },
+    "editor.defaultFormatter": "eggnstone.DartFormat"
+  },
+  "notebook.defaultFormatter": "eggnstone.DartFormat"
+}
