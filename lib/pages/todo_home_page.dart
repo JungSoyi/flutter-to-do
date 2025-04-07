@@ -1,5 +1,5 @@
 
-import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_to_do/models/todo.dart';
 
 class TodoHomePage extends StatefulWidget {
@@ -37,24 +37,22 @@ class _TodoHomePageState extends State<TodoHomePage> {
 
   @override
   Widget build(BuildContext context){
-    return Scaffold(
-      appBar: AppBar(title: const Text('Todo List')),
-      body: Column(
+    return CupertinoPageScaffold(
+      navigationBar: CupertinoNavigationBar(middle: Text('Todo List')),
+      child: Column(
         children: [
           Padding(
-            padding: const EdgeInsets.all(16),
+            padding: const EdgeInsets.all(50),
             child:Row(
               children:[
                 Expanded(
-                  child:TextField(
+                  child:CupertinoTextField(
                     controller: _controller,
-                    decoration: const InputDecoration(
-                      hintText: 'Enter a task',
-                    ),
+                    placeholder: 'Enter a task',
                   ),
                 ),
                 const SizedBox(width: 10),
-                ElevatedButton(
+                CupertinoButton(
                   onPressed: _addTodo,
                   child: const Text('Add'),
                 ),
@@ -66,21 +64,20 @@ class _TodoHomePageState extends State<TodoHomePage> {
               itemCount: _todos.length,
               itemBuilder: (context, index){
                 final todo = _todos[index];
-                return ListTile(
-                  title: Text(
-                    todo.title,
-                    style: TextStyle(
-                      decoration: todo.isDone?TextDecoration.lineThrough:TextDecoration.none,
+                return Row(
+                  children: [
+                    CupertinoSwitch(
+                      value:todo.isDone,
+                      onChanged: (_)=> _toggleDone(index),
                     ),
-                  ),
-                  leading: Checkbox(
-                    value: todo.isDone,
-                    onChanged:(_) => _toggleDone(index),
-                  ),
-                  trailing:IconButton(
-                    icon: const Icon(Icons.delete),
-                    onPressed:()=> _deleteTodo(index),
-                  ),
+                    Expanded(child: Text(todo.title),
+                    ),
+                    CupertinoButton(
+                      padding: EdgeInsets.zero,
+                      onPressed: () => _deleteTodo(index),
+                      child:Icon(CupertinoIcons.delete)
+                    )
+                  ],
                 );
               },
             ),
@@ -90,3 +87,6 @@ class _TodoHomePageState extends State<TodoHomePage> {
     );
   }
 }
+
+
+
